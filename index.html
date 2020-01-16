@@ -1,0 +1,719 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="./js/tipped.min.js"></script>
+	<script src="./js/jquery.simplemarquee.js"></script>
+	
+	<link href="./css/tipped.css" media="all" rel="stylesheet" type="text/css" >
+	
+	<style>
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+@font-face {font-family: "AkzidenzGroteskPro-Regular";
+	src: url("fonts/AkzidenzGroteskPro-Regular.eot"); /* IE9*/
+	src: url("fonts/AkzidenzGroteskPro-Regular.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+		 url("fonts/CAkzidenzGroteskPro-Regular.woff2") format("woff2"), /* chrome、firefox */
+		 url("fonts/AkzidenzGroteskPro-Regular.woff") format("woff"), /* chrome、firefox */
+		 url("fonts/AkzidenzGroteskPro-Regular.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+		 url("fonts/AkzidenzGroteskPro-Regular.svg#Circular Std Book") format("svg"); /* iOS 4.1- */
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'AkzidenzGroteskPro-Bold';
+	src: url('fonts/AkzidenzGroteskPro-Bold.eot');
+	src: url('fonts/MAkzidenzGroteskPro-Bold.eot?#iefix') format('embedded-opentype'),
+		 url('fonts/AkzidenzGroteskPro-Bold.woff2') format('woff2'),
+		 url('fonts/MAkzidenzGroteskPro-Bold.woff') format('woff'),
+		 url('fonts/AkzidenzGroteskPro-Bold.ttf') format('truetype'),
+		 url('fonts/AkzidenzGroteskPro-Bold.svg#Miratrix-Normal') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+html {
+	font-family: "AkzidenzGroteskPro-Regular";
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+img {
+	max-width: 100%;
+	height: auto;
+	outline:none;
+	border:none;
+	vertical-align: top;
+}
+.menu_wrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #000000;
+	z-index: 10000;
+	text-align: right;
+}
+.menu_button {
+	width: 40px;
+    height: 40px;
+    padding: 10px 8px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+.menu_button_line {
+	width: 100%;
+	height: 2px;
+	background: #ffffff;
+	position: relative;
+	display: inline-block;	
+    transition: all 0.5s ease-in-out;
+    color: transparent;
+}
+.menu_button_line:before, .menu_button_line:after {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background: #ffffff;
+	height: 2px;
+	transition: all 0.5s ease-in-out;
+}
+.menu_button_line:before {
+	top: -7px;
+}
+.menu_button_line:after{
+	top: 7px;
+}
+.menu_wrap.open .menu_button_line {
+	background: rgba(255,255,255,0);
+}
+.menu_wrap.open .menu_button_line:before {
+	transform: rotate(135deg);
+	top: 0;
+}
+.menu_wrap.open .menu_button_line:after {
+	transform: rotate(225deg);
+	top: 0;
+}
+.menu {
+	display: none;
+	text-align: left;
+	margin: 0 5% 20px 5%;
+}
+.menu li:not(:last-of-type) {
+    border-bottom: 1px solid #ffffff;
+}
+.menu a {
+    color: #ffffff;
+    display: block;
+    font-family: "AkzidenzGroteskPro-Bold";
+    font-size: 14px;
+	text-decoration: none;
+    padding: 10px 0;
+}
+.menu li:not(:last-of-type) {
+
+    border-bottom: 1px solid #ffffff;
+}
+.collage_wrap {
+	background: #000000;
+	
+}
+.collage {
+	position: relative;
+	height: calc(100vh - 70px);
+	overflow: hidden;
+	
+}
+.collage_item.abstract {
+	position: absolute;
+	left: 20px;
+    top: 40px;
+	width: auto;
+    max-width: 42%;
+}
+.title, .author {
+	color: #ffffff;
+}
+.title {
+    font-family: "AkzidenzGroteskPro-Bold";
+    font-size: 26px;
+    text-align: center;
+    padding: 100px 0 20px 0;
+}
+.author {
+    display: inline-block;
+    margin-left: 15vw;
+    font-size: 11px;
+}
+.collage_item.part1 {
+    max-width: 130px;
+    position: absolute;
+    right: 20%;
+    top: 32%;
+	z-index: 100;
+}
+
+.collage_item.part2 {
+    max-width: 28%;
+    position: absolute;
+    left: 5%;
+    top: 54%;
+    z-index: 100;
+}
+
+.collage_item.part3 {
+    position: absolute;
+    left: 0;
+    top: 40%;
+	z-index: 200;
+}
+
+.collage_item.part4 {
+    position: absolute;
+    bottom: 3%;
+    right: -12%;
+    transform: rotate(-45deg);
+    max-width: 45%;
+	z-index: 100;
+}
+
+.collage_item.part5 {
+    position: absolute;
+    bottom: -5%;
+    left: 0;
+    max-width: 50%;
+	z-index: 100;
+}
+
+.collage_item.conclusion {
+    position: absolute;
+    max-width: 50%;
+    bottom: 1.5%;
+    left: 27.5%;
+    z-index: 50;
+}
+
+
+.collage_item.abstract:after {
+	background: url(./img/abstract_black.png) center no-repeat;
+}
+.collage_item.part1:after {
+	background: url(./img/part1_black.png) center no-repeat;
+}
+.collage_item.part2:after {
+	background: url(./img/part2_black.png) center no-repeat;
+}
+.collage_item.part3:after {
+	background: url(./img/part3_black.png) center no-repeat;
+}
+.collage_item.part4:after {
+	background: url(./img/part4_black.png) center no-repeat;
+}
+.collage_item.part5:after {
+	background: url(./img/part5_black.png) center no-repeat;
+}
+.collage_item.conclusion:after {
+	background: url(./img/conclusion_black.png) center no-repeat;
+}
+.collage_item.active:hover:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.content h2 {
+    border-top: 60px solid transparent;
+    margin: -30px 5% 10px 5%;
+	font-family: "AkzidenzGroteskPro-Bold";
+}
+.content p {
+	margin: 15px 5%;
+	font-size: 14px;
+	word-wrap: break-word;
+}
+.content p:not(.without_indent) {
+	text-indent: 30px;
+}
+.content p.grey {
+	color: #797979;
+}
+.content p.verse {
+    font-style: italic;
+    line-height: 1.5;
+}
+.content sup {
+    padding: 0 4px;
+}
+.content_link {
+	color: #0050ef;
+	text-decoration: underline;
+}
+.content_link:hover {
+	text-decoration: none;
+}
+.img_title {
+    display: block;
+    margin: 5px 5% 0 5%;
+    font-size: 14px;
+}
+
+.scrollUp {
+	display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    width: 50px;
+    height: 50px;
+    padding: 15px;
+}
+.scrollUp svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+	fill: #ffffff;
+}
+
+.marquee_wrap {
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+	background: #000000;
+	z-index: 100000;
+	/*justify-content: center;
+	align-items: center;*/
+	color: #ffffff;
+	font-size: 60vw;
+	white-space: nowrap;
+	overflow: hidden;
+	box-sizing: border-box;
+	display: none;
+}
+.marquee_wrap.open {
+	display: block;
+}
+.marquee_wrap.open .marquee {
+	position: absolute;
+    transform: rotate(90deg);
+    width: 100vh;
+    top: 30%;
+    left: -25%;
+	overflow: hidden;
+}
+.marquee_wrap.open span {
+	white-space: nowrap;
+	/*display: inline-block;
+	padding-left: 1000px;
+	animation: marquee 10s linear infinite;*/
+}
+
+/*.marquee_wrap.open span:hover {
+	animation-play-state: paused
+}*/
+@keyframes marquee {
+	0%   { transform: translate(0, 0); }
+	100% { transform: translate(-100%, 0); }
+}
+.marquee_button_wrap {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+#marquee_button {
+	width: 30px;
+	height: 30px;
+	position: relative;
+}
+#marquee_button:before, #marquee_button:after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 1px;
+	background: #ffffff;
+}
+#marquee_button:before {
+	transform: rotate(45deg);
+	top: 50%;
+	left: 0;
+}
+#marquee_button:after {
+	transform: rotate(-45deg);
+	top: 50%;
+	left: 0;
+}
+
+	</style>
+	
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="header">
+			<div class="menu_wrap">
+				<div class="menu_button"><span class="menu_button_line"></span></div>
+				<ul class="menu">
+					<li><a href="#abstract">Abstract</a></li>
+					<li><a href="#part1">Part 1: fear</a></li>
+					<li><a href="#part2">Part 2: corpse of an ogre</a></li>
+					<li><a href="#part3">Part 3: actionism</a></li>
+					<li><a href="#part4">Part 4: Petr Pavlensky</a></li>
+					<li><a href="#part5">Part 5: body is a text, sexuality, sociality</a></li>
+					<li><a href="#conclusion">Conclusion</a></li>
+				</ul>
+			</div>
+			<div class="collage_wrap">
+				<div class="collage">
+					<div class="collage_item abstract"><a class="collage_link" href="#abstract"><img src="./img/abstract.png" alt=""/></a></div>
+					<!-- <div class="title">Body as a political vehicle in Russia</div>
+					<div class="author">
+						<p>Thesis by</p>
+						<p>Anastasiia Umpeleva</p>
+						<p>BA Graphic Design</p>
+					</div> -->
+					<div class="collage_item part1"><a class="collage_link" href="#part1"><img src="./img/part1.png" alt=""/></a></div>
+					<div class="collage_item part2"><a class="collage_link" href="#part2"><img src="./img/part2.png" alt=""/></a></div>
+					<div class="collage_item part3"><a class="collage_link" href="#part3"><img src="./img/part3.png" alt=""/></a></div>
+					<div class="collage_item part4"><a class="collage_link" href="#part4"><img src="./img/part4.png" alt=""/></a></div>
+					<div class="collage_item part5"><a class="collage_link" href="#part5"><img src="./img/part5.png" alt=""/></a></div>
+					<div class="collage_item conclusion"><a class="collage_link" href="#conclusion"><img src="./img/conclusion.png" alt=""/></a></div>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<h2 id="abstract">The body as a political vehicle in Russia</h2>
+			
+			<p class="without_indent">Thesis by Anastasiia Umpeleva</p>
+			
+			
+			
+			
+			
+			<h2 id="abstract">Abstract</h2>
+			<p class="without_indent">This thesis examined the relatively recent emergence of body-protest art in Russia, which replaced a literary text. This shift can be approximately equally attributed to the cultural, socio-political and economic shifts after the collapse of the Soviet Union.</p>
+			<p class="without_indent">Analysing the work of Peter Pavlensky and other activists as an example of a new direction in Russian art and revealing the specifics of using the body in protest political discourse, I would like to answer the question: what led to the appearance of such a bodily representation in Russia?</p>
+			<p class="without_indent">Perhaps the secret of understanding Pavlensky’s actions in his favourite phrase: “The history of art is the history of a clash of a man and power”, in which the legacy of Michel Foucault is noticeable. I also examine the historical significance of literature in Russian society before considering changes.</p>
+			<p class="without_indent">Media propaganda creates a certain veil that does not allow to correctly assess the political situation in Russia. I hope that with the help of this thesis I will open the veil a little to show and clarify to foreigners what is happening in Russia without embellishing anything.</p>
+			<p class="without_indent">“Your power ends where my body begins, because you can never do more to me than I have done to myself.”<sup id="tooltip1">1</sup> (Marat Guelman, 2016)</p>
+			
+			<img src="./img/image1.jpg" alt="Anatoly Osmolovsky and the Radek group, “Against All”, Mausoleum of Lenin, Moscow 1999"/>
+			
+			<span class="img_title">Anatoly Osmolovsky and the Radek group, “Against All”, Mausoleum of Lenin, Moscow 1999</span>
+			
+			<h2 id="part1">Part 1: fear</h2>
+			<p class="without_indent grey">I go out of the railway carriage at Pushkinskaya metro station. About 30 police officers in full uniform are already waiting for us on the platform. I go upstairs and immediately find myself surrounded by an incredible crowd of protesters. Only one out of eight exits to the surface are open. Some time later I find myself on the square, the entire perimeter of which is surrounded by “OMON”.<sup id="tooltip2">2</sup> Everything is covered with metal fences, so you feel like an animal in a corral. The crowd around me begin to chant: “Pass!”. The police reply using loudspeakers: “Your actions are illegal! You interfere in the passage of civilians! Please disperse!”. Nearby, an elderly couple unsuccessfully tries to explain that they live in a building around the corner and they are not able to reach home because of this pandemonium, but nobody pays any attention to them and only one phrase repeats over and over again: “Your actions are illegal! You interfere in the passage of civilians! Please disperse!”. So that’s how the <a class="content_link" href="https://www.youtube.com/watch?v=jB_4q_Fc9AU" target="_blank">protest</a> began on July 27th 2019 in Moscow on Tverskaya Street with a record number of detentions of 1,200 people.</p>
+			<p>This protest happened after election officials barred opposition candidates from running for City Council citing irregularities in the signatures collected to put them on the ballot. Many candidates went on a hunger strike and called for street protesters to fight for their rights. The protesters proved that there were not a hundred of them but hundreds and thousands. The government didn’t care about it so every protest ended with thousands of detentions. We live in a time of overwhelming political disappointment. “Blood is being spilt in streams, and in the merriest way, as though it were champagne”.<sup id="tooltip3">3</sup></p>
+			<p>There are several types of oppositions in today's Russia. There is a systemic opposition that supmits to Vladimir Putin and receives funding from the state and an unofficial non-systemic opposition that is really interested in changes in the country, which due to the absence of a common leader does not have a strong impact on the government. The dissociation of the opposition is also visible in protests when some urge to go on the streets others say not to do this, but all Russians have dissatisfaction with the president which is proved by opinion polls. The Russians are clearly disappointed in the authorities, but so far they are too divided to unite around a revolutionary idea. By the end of May 2019, the Russian confidence rating for Putin updated the historical rate and dropped to 31.7 percent by WCIOM (All-Russian Center for the Study of Public Opinion).<sup id="tooltip4">4</sup> This indicator began to decline since the summer of 2018 against the background of an increase in the retirement age, an increase in the value added tax and a drop in real incomes of the population.<sup id="tooltip5">5</sup> It is ironic that after the publication of the survey data, the WCIOM (All-Russian Center for the Study of Public Opinion) announced a change in the methodology for conducting the survey and the confidence rating for the president unexpectedly rose to 72 percent. Now if you go to the WCIOM website, you are presented with the results of both surveys.<sup id="tooltip6">6</sup></p>
+			<p>My parents told me to follow the rules since my green years. I should be at home before a curfew, because no one wants to cross with Russian police too often. I mustn’t wear bright clothes, because it would inevitably attract unnecessary attention. I was advised to never talk about my success, because you never know what can happen. My parents are afraid of a change in a government framework, because the Dashing 90's may come back.<sup id="tooltip7">7</sup></p>
+			<p>So what was it like when the Soviet Union collapsed? When it all ended in the 90s? Money depreciated and the so-called default occurred. Many people including my grandfather lost their well-paid job because state-owned enterprises began to go into private hands. The format of work has changed and this has attracted people involved in criminal activity, who controlled all business in the country and, on the contrary, earned huge amounts of money. Many lost money they kept in their accounts at the only bank Sberbank, which exists to this day. My grandmother lost 80 thousand rubles, a lot of money at the time for which it was possible to buy several apartments and cars. There was also a shortage of food and people storm grocery stores. The crowd was already gathering before the store opened and after everyone came in they grabbed what was on the half-empty shelves. Vodka and cigarettes were given out exclusively on coupons; there were no eggs at all; instead, they used egg powder. This happened because individual republics began to separate from fifteen republics of the USSR not only territorially, but also economically, and the relationship of enterprises producing various products of the Soviet Union was broken forever.</p>
+			<p>In general, you mustn’t show anyone if everything in your life goes well. I always thought: where did the older generation get this fear, this desire to smear everything with grey paint? Why are they afraid that even for the least courage the punishment will surely fly in? Maybe this fear originated in the last century and through generations reached us. How and when the fear grew among Soviet people to freely express their thoughts and defend their position and why this fear passed from generation to generation.</p>
+			<p>The Soviet Union is too much in the heads of Russian citizens, because Russian people still continue to rely on Soviet history as national pride and identification. In the USSR, the opinions and desires of one person or group of persons were not taken into account too much. If you wanted to change something, then you had to get into one of the structures of authority, but as soon as you got into the system, a clear hierarchy began to be traced, as if in a pyramid where each level is a Director and so on up to the Secretary General. Thus, if you want to change something or say something, the system always bothered you and there were two options: either you obey it or will be exclude of so-called vertical of the state.</p>
+			<p>Under Soviet rule, even start-up associations were suppressed and completely excluded. Local self-organisation was a terrible threat to the state. If they were not prohibited, they were included in a certain structure. When societies of lovers of stamps, book lovers, motorists appeared, they entered the structure of the society of philatelists, book lovers and motorists of the USSR and became its regional division. The leadership of these societies was certainly in Moscow. Everything was nationalised, and was a conscious policy. In the country so far, and how many years have passed, there are no independent trade unions. They were for some time and even developed, but in the beginning of the 2000s the process of their complete extrusion began. The legislation regarding the creation of trade unions remains quite liberal, but in fact they simply do not exist. Self-organisation of people is still very scary. Almost all of us hoped, in fact, that supsequently communism the Russian Federation would develop as a democracy, but after Putin's re-election in 2012, democracy in the process of working in the Russian Federation transformed into a stereotypical autocracy.</p>
+			<p>“The Russian government dropped any pretense of appearing Western; officials stopped trying to hide the wealth they had accumulated through corruption; and the media was increasingly regarded as a tool of state propaganda. Courts became punitive rather than judicial bodies, with political disagreements treated as criminal conduct. In these circumstances, even the most politically engaged segment of Russian society became despondent and apathetic. After all, as one often hears uttered in Russia, <a class="content_link" href="https://www.youtube.com/watch?v=zJeMrmS3e1M" target="_blank">There's nothing we can do”</a>.<sup id="tooltip8">8</sup></p>
+			<p>Russian society, which once relied heavily on the literary medium as a means of political discourse, began to realise that this discourse was less and less on the pages of the literary text and more on the bodies of performers in new, unconventional ways of expression. The main question that should be considered in this thesis is: what led to the appearance of such a strikingly bodily representation in Russia? What are its consequences, given that the Russian cultural consciousness historically dictated the literary milieu? To answer these questions, I will talk about the historical significance of literature in Russian society before considering the changes.</p>
+			
+			<h2 id="part2">Part 2: corpse of an ogre</h2>
+			<p class="without_indent verse">“The poet in Russia is more than just a poet<br>In Russia, fated to be born as poets<br>are only those in whom the proud spirit of the citizen roams,<br>those who have no comfort, and no peace.<br>The poet in Russia is the image of his times<br>and a ghostly apparition of the future.”<sup id="tooltip9">9</sup></p>
+			<p class="without_indent">The discussion about the role of the artist in the society, about the border between art and activism is centuries-old and universal. Writers have always played a big role in shaping public life, especially in Russia. Since time immemorial, almost the only people who could convey their opposition thoughts in the country were writers and from that time, they were supjected to persecution and repression.</p>
+			<p>In April 1682, Avvakum Petrov, the founder of the Old Believers movement, writer and publicist, was burned. His religious doctrine is reflected in several dozen works. In his youth, he was the closest associate of Patriarch Nikon, but supsequently opposed church reform and even under the threat of death did not abandon his views.</p>
+			<p>Writer and politician Alexander Radishchev was arrested by decree of Catherine II on July 1790 for writing and publishing the book “Journey from St. Petersburg to Moscow”, in which he outlined his vision of the situation in the country and its main problems.</p>
+			<p>In the history of literature of the 19th century, the case of Petrashevists, occupies a prominent place. It is important because so many writers and scientists participated in this political process. In addition to Petrashevsky himself, such writers as Dostoevsky, Plescheev, Palms, and others were also involved. Their participation was reduced to the fact that they were on the Fridays of Petrashevsky and were recorded there as “freethinkers” with revolutionary views and ideas. They were accused of spreading revolutionary ideas among the population, as well as of "trying to settle the evil principles of liberalism in the younger generation." As a result, the court sentenced all members of the circle to death. Such a harsh sentence was motivated solely by "criminal talks", "bad ideas", "vile liberalism." Among the prisoners standing in the funeral shrouds, Fyodor Dostoevsky, still a beginner, but already a famous writer, was awaiting the death penalty. The verdict was announced. The command was given: "To the charge!". At that moment, a carriage burst onto the parade ground, from which an officer stepped out. He announced a royal pardon to everyone and the firing squad was replaced by hard labor. Fyodor Dostoevsky got four years of hard labor and he also lost all his rights and condition. He was only 28 years old at that time.</p>
+			<p>Russian revolutionary journalist and writer Alexander Herzen first expressed liberal, then socialist views, was forced to go abroad. He published the newspaper Kolokol, the most important early organ of the revolutionaries. In 1857-1861, when the Kolokol got the greatest influence, publishers paid attention mainly to the peasant issue, believing that serfdom was the main obstacle to the development and strengthening of the country, and considered the community as the basis for future socio-economic relations. They considered their main tasks to contribute to the speedy liberation of the peasants from the land in order to prevent the possible, in their opinion, bloodshed as a result of a peasant riot if the liberation occurs without land; rallying for this all anti-serfdom forces, moral pressure on Emperor Alexander II and the government.</p>
+			<p>In 1862, Nikolay Chernyshevsky, a Russian materialist philosopher and critic, was arrested, and then the journal Sovremennik, published by him, was closed for eight months "for a harmful direction." The position of the writer was worsened by Herzen's letter to the revolutionary and publicist Nikolai Serno-Solovievich, in which he declared his readiness to publish the journal abroad. Chernyshevsky was accused of having links with revolutionary emigration and imprisoned in the Peter and Paul Fortress. In February 1864, Chernyshevsky was sentenced to hard labor for a term of 14 years without the right to return from Siberia. Although Emperor Alexander II reduced the penal servitude to seven years, in general, the critic spent more than two decades in prison.</p>
+			<p class="without_indent">“I have such a way of thinking that I have to wait any minute for the gendarmes to appear, take me to Petersburg and put me in a fortress. God knows for how long. I do things here that smell like hard labor, I say such things in class.” (Nikolay Chernyshevsky)</p>
+			<p>Many Soviet writers took an active part in the October Revolution and expressed, for various reasons, their support. With the advent of Soviet times, the text more often, voluntarily or involuntarily, becomes a political statement. In the 1920s, many writers were expelled from Russia; in the 1930s, the time came for camps and executions. Not all of them really had something against the Soviet regime or even treated it with any criticism. But the case of Osip Mandelstam, who wrote one of the most fearless poems of the 20th century, is given out:</p>
+			<p class="without_indent verse">“We live, not sensing our own country beneath us,<br>Ten steps away they dissolve, our speeches,<br>But where enough meet for half-conversation,<br>The Kremlin hillbilly is our preoccupation.<br>They’re like slimy worms, his fat fingers,<br>His words, as solid as weights of measure.<br>In his cockroach moustaches there’s a hint<br>Of laughter, while below his top boots gleam…”.<sup id="tooltip10">10</sup></p>
+			<p>Mandelstam was first exiled, then a few years later sent to the camp, where he died.</p>
+			<p>The camp experience made Alexander Solzhenitsyn and Varlam Shalamov irreconcilable haters of the communist regime. If the hatred of Shalamov was deposited in the most terrible tales of the Gulag, Solzhenitsyn transferred his writing work to the political plane. His "Gulag Archipelago" eventually played a role in the collapse of the Soviet Union.</p>
+			<p>Daniil Harms is a Russian, Soviet writer, poet and playwright. His contemporaries believed in the power of art, not only to portray reality, but also for its formation. Their literary works sought to create new language systems that offer the reader the potential for a completely new experience of reality. The absurdist quality of their works reflected the absurdity of the world around them and interacted with it, and by the 1930s, the last Soviet avant-garde poets used instrumental language for relativistic destruction of objects. At the same time, the Stalinist terror in the Soviet Union entered an unprecedented period of oppression. The absurdity of avant-garde poems was a particularly expressive reflection of the terrifying absurdity of everyday life, and in the early 1940s, the arrests and executions of these poets illustrated this absurdity as extrapolated by Nadezhda Tolokonnikova from the Riot group. The political role of the dissident artist is inextricably linked with the role of the martyr. The literary critic Vissarion Belinsky argued that “to take away from art the right to serve the public interest is not to elevate it but to debase it, because it means to deprive it of its most vital force – of thought – to transform it into the object of some kind of sybaritic enjoyment, the plaything of lazy idlers.” His credo, that “our time craves for convictions, it is tormented by the hunger for the truth,” was a response to Russian romantics who had embraced the idea of art for art’s sake, arguing, as Pushkin once did, that “the purpose of poetry is poetry.”<sup id="tooltip11">11</sup></p>
+			<p>Ideological freedom has come With the collapse of the USSR in Russia. Nevertheless, the tradition of criticising the authorities and active political actions in conjunction with literary activity has not disappeared.</p>
+			<p class="without_indent">“The return of the great writer Alexander Solzhenitsyn from exile in 1994 became symbolic of a new era. By this time, rock music had taken over the roles previously held by theatre and literature. The creativity of acts like Mashina Vremeni, Boris Grebenshikov and DDT led the charge for a new, open world. The whole country knew the lyrics by Kino's lead singer Viktor Tsoi: "Our hearts demand change.” Now, social debate in Russia has been catalysed by contemporary art, and provocative performances have proven the most effective medium for influencing public opinion. Artists have their fingers firmly on the pulse of the rapid changes taking place in Russian society.”<sup id="tooltip12">12</sup></p>
+			<p>“The times when writers played a big role in public life were left behind,” says Boris Akunin. Although he is very famous and is one of the "stars" of the protest movement, along with the most famous bloggers, musicians, journalists and people of other professions, Boris Akunin does not consider himself Solzhenitsyn.</p>
+			<p>If you look closely, there are almost no writers in the country who would dare to tackle the only relevant topic of Putin's Russia: the monstrous past of terror and the Gulag, the result and continuation of which is the newly elected president of the country.</p>
+			<p>The ghost of the Soviet Union still does not let go and breathes them in the back of the head. He follows them on the heels even in science fiction, such as, for example, in the best-selling  book “Metro 2033” by Dmitry Glukhovsky, where, in the best traditions of the Cold War, survivors of the nuclear conflict gather in the Moscow metro. 20 years after the collapse of the Soviet system, the literary critic Konstantin Milchin is sure, the USSR still remains an “obsession” with Russian writers.</p>
+			<p>The collapse of the USSR, the sudden openness to the outside world and private capitalism, the ability to travel freely, buy and have fun - all this turned people's heads. “Literature has collapsed from its pedestal,” concludes Irene Sokologorskaya, former rector of the University of Paris VIII and founder of the bilingual journal Russian Literature (Les Lettres russes). The significance of the book, which was truly colossal at the time of the Iron Curtain, when neither cinema nor television (not to mention the Internet) reflected people's lives, has now declined sharply.</p>
+			<p class="without_indent">“The USSR itself is the corpse of an ogre who was not buried. Compared with post-war Germany the West helped to dig a grave and dump all this Nazi past there but in Yeltsin’s years, the corpse was thrown with sawdust and said that he himself will become darn, and we need to move forward,” Vladimir Sorokin sneers in a recent interview with Ogonyok magazine.</p>
+			<p class="without_indent">In a survey from the Levada Center<sup id="tooltip13">13</sup>, a non-governmental research organization, Russian people were asked to name the best writers in Russia. The survey was conducted on February 19-24, 2016 among 1600 people aged 18 years and older in 137 settlements of 48 regions of the country. The results were interesting, in the first places, of course, are Tolstoy, Dostoevsky, Chekhov and Pushkin, there are almost all men in a list and not a single living author in top 10. Why it is like that? Are contemporary Russian writers not good enough? Of course, by these criteria people tend to think first of all about Tolstoy and Chekhov, and not necessarily Victor Pelevin, Vladimir Sorokin or Boris Akunin. It is not surprising that Pushkin scored high points. Once at school we were told: “Pushkin is our everything” and now this phrase is firmly embedded in our supconscious to define our opinion. The influence of the Russian education system is evident throughout this list, filled with reputable Soviet classics. Marat Guelman, a Russian art curator, who made an exhibition called "Art Riot: Post-Soviet Actionism," opened at London's Saatchi Gallery in 2017, argued:</p>
+			<p class="without_indent">“Contemporary writers in Russia are often bleak and challenging. Postmodern literary patchworks, dense thickets of imagery, or violent, veiled satires, while pleasing some literary judges, are unlikely to win huge global audiences. But there are other factors at play in Russia. This poll suggests a conservatism beyond the casual reader’s nostalgia that inflects every literary poll.”</p>
+			
+			<h2 id="part3">Part 3: actionism</h2>
+			<p>The term "actionism" does not fully correspond to the concept itself. It would be more correct in this case to use the word "performance", which at the moment describes all the artistic activity associated with a gesture in space, that is, an artist. And in this sense, an action is like a derivative of a performance. In old encyclopedias they are divided: action, performance, happening and so on. The term "Moscow actionism" arose by analogy with Vienna actionism of the late 50s - 60s, so sharp and provocative. He took root in the form of Moscow actionism. Historically, Moscow actionism has been divided. At first, it’s like the performances of groups, collective actions that took place from the 70s to the present day but Moscow actionism itself is considered the actions of a group of artists that began in the 90s and fundamentally differ from what their predecessors did.</p>
+			<img src="./img/image2.jpg"/>
+			<span class="img_title">An article Published in the Moskovsky Komsomolets newspaper:<br>“What a performance! The youth movement “E.T.I." already known for its non-standard performances. At two o’clock in the afternoon, 13 guys and girls laid out a three-letter word using their bodies in Red Square. The police officers arrived, picked up the young people and invited them to a nearby police station.”</span>
+			<p>The most famous first action was the action held in 1991 on Red Square in front of the Mausoleum. It was a performance of the group “E.T.I.” (“Expropriation of the territory of art”): they laid out with their bodies on Red Square the famous Russian word with three letters “ХУЙ” (“COCK”). This performance began the history of the radical performances of the 90s, actionism, because it was the first performance in the public space - at a key point and at a key time.</p>
+			<p>For performance, both place and time are very important. Accordingly, he had a certain linguistic character, because this indecent word was, as it were, reflected in the inscription on the Lenin Mausoleum. It is interesting that at that moment the police did not immediately recognise what was happening. They said: "We are laying out the ornament." The most important thing happened here: the next day a very small article was published in the Moskovsky Komsomolets newspaper, and this event turned out to be important because the performance resonated in the media space. It is known that this note itself was initiated by one of the members of the group who simply sold it. And the performance in this case took place in the medial field. But it is not necessary that this should happen in the medial field. And the most amazing thing is that at first a case was instituted on them, then the Soviet government fell, and after letters from the public the case was somehow hushed up. And this is also one of the most amazing properties of the performance of the 90s for today, that the most radical actions ended for the artist with a maximum of one or two hours of proceedings at the police station. And no one seemed to suffer any punishment, with the only exception - Alexander Brener.</p>
+			<p>Here it must be said that the performance does not have to be in the public space and even have a mass media orientation. Because one of the most important performances that Avdey Ter-Oganyan made in the Trekhprudny Pereulok gallery was called <a target="_blank" href="http://artuzel.com/sites/default/files/styles/art_slider/public/800px-1992_Ter-Oganian_V_storonu_ob'ekta.jpg?itok=yR2cEXHW">“Toward the Object”</a>: the deadly drunk Avdey Ter-Oganyan was in the gallery. That is, people received invitations and found on the floor only one object - Avdey Ter-Oganyan himself, which directly responded to disputes among professionals - artists and critics - what art is, what an object of art is, and what a supject of art is. Avdey Ter-Ohanyan presented himself, simultaneously leaving the supjectivity, in two guises: as an object and as a supject, as a creator and as a result, his own creation. Naturally, this performance did not have too much media response.</p>
+			<p>If we talk about the political component, the political reaction to the actionism of the 90s, then we can say that in some cases the action as a political one failed, because the audience and the media noted only radicalism. For example, during the famous campaign by Oleg Kulik in the Regina Gallery <a target="_blank" href="https://ovcharenko.art/exhibitions/181/">“Piglet Handing Out Gifts”</a>, a pig was slaughtered by real butchers from the market. And the media hype occurred just around this action, and for the first time any groups of indignant comrades appeared on the scene. But as a result, no one noted that Oleg Kulik’s message was fundamentally political, because at that time the Duma was discussing the question of abolishing the death penalty or not. And he wanted to show that if you say that you cannot kill the pigs you eat, then why can you kill people? But no one heard this call. As always, in such cases, the majority of the public for some reason decided that Oleg Kulik wants to become famous. Yes, of course, he became famous, but because of this, no one heard him. Later, Oleg Kulik became famous, wandering the streets of Moscow like a dog, crawling naked, biting and barking at passers-by. For Kulik, the action was aimed at identity in a country where all landmarks disappeared. That’s how Noah Sneider describes it in the article “Body Politics”:</p>
+			<img src="./img/image3.jpg"/>
+			<span class="img_title">Alexander Brener. “Yeltsin, come out!”<br>Red Square, Moscow 1995</span>
+			<img src="./img/image4.jpg"/>
+			<p>“What was left was only the body, which had never belonged to you before. The first actionists of the 1990s offered this body, the naked body of the naked man in the midst of a wild city, It’s a powerful image: out of these endless myths of collectivism, these endless crowds and groups and bands and parties, emerges a person, emerges an individual with nothing and no one behind him. He’s one against all. But it’s not that he’s fighting, he is simply saying: I exist! Here I am, and I am art.”<sup id="tooltip14">14</sup></p>
+			<p>In one of the newspapers, after another “dog show”, they either jokingly or seriously wrote: “What people have been driven to, people naked run around the streets and rush to passers-by!” Yuri Luzhkov<sup id="tooltip15">15</sup> in response then promised to expel all naked people from Moscow streets. In the future, Kulik in the already beloved image of a chain dog organized scandalous actions in a number of western cities - New York, Stockholm, Zurich, attacking and biting people. During one of the performances, a passerby literally perceived the threat from a dog-man and, pulling the chain, strongly squeezed his throat with a collar - Kulik lost consciousness for several minutes. In 1996, Oleg Kulik, under the slogan “Beasts Against Atrocities,” decided to run for president of the country from the Animal Party, but was rejected by the Electoral Commission at the stage of supmitting supscription lists, as his documents were printed with cat paws and were glued with flies and cockroaches.</p>
+			<img src="./img/image5.jpg"/><br><br>
+			<img src="./img/image6.jpg"/>
+			<span class="img_title">Avdey Ter-Oganyan and Anatoly Osmolovsky, «Barricade on Bolshaya Nikitskaya Street», Moscow 1998</span>
+			<p>If we talk further about politicized actions, we should mention <a target="_blank" href="http://os.colta.ru/photogallery/20422/233692/">the action of Alexander Brener</a>, who went to Lobnoye Mesto in boxing shorts and gloves and began to box towards the Kremlin with shouts: “Boris, come out!”<sup id="tooltip16">16</sup> Boris Nikolaevich, of course, did not come out. There was a lot of press, and almost no one noticed that Alexander Brener had in mind a direct political statement: he opposed the outbreak of war in Chechnya. After that, in most cases, law enforcement agencies were surprisingly complacent about such actions. They describe the poet and artist Alexander Brener as a “creator with a schiza” or “a weirdo with strange manners”. </p>
+			<p>He was the leader of Moscow actionism and one of the most prominent performance masters in Russia in the nineties. In 1997, in the Amsterdam in Stedelijk Museum, a certain artist painted green symbol in the painting of Kazimir Malevich “Suprematism” with a green paint. A creator was sent to jail for 5 months. According to Brener's acquaintances, the motivation for this act of vandalism was the artist’s desire to solve his housing problem at least for a while. Alexander Brener himself admits that the objective of his actions is to attract public attention to the issues that are being ignored. For example, in January 1996, he flooded the windows of the Belarusian embassy with ketchup. The reason for such a daring trick was an incident that occurred on the Polish-Belarusian border. Then, during the festival of air vehicles, held in Poland, one of the balloons strayed and crossed the border of neighboring Belarus. In response, Belarusian border guards fired on air transport - both pilots died.</p>
+			<p>It should be said that, unfortunately, actionism of the 90s had practically no real political effect. They were a kind of anarchist antics that, in essence, simply indicated a certain phenomenon or lack of this phenomenon. Because if, say, when John Lennon and Yoko Ono spoke out against the war, posing naked to journalists in their own bed, then there were powerful currents behind them. Performers of the 90s actually acted on their own behalf, like Alexander Brener. The only case when a semblance of such a movement was created was the action “Barricade on Bolshaya Nikitskaya”, the authors of which are Avdey Ter-Oganyan and Anatoly Osmolovsky. Some anarchist movements also joined this action. Bolshaya Nikitskaya was blocked, and everything was painted with the slogans of 1968: “It is forbidden to forbid” and so on. And part of the barricade was composed of paintings by various artists. But this showed, as a matter of fact, that, indeed, behind this statement there are such small, marginal groups that it still turns out that the artist is one on one.</p>
+			<p>In the end, it turned out that political activity could be corrupt. One of the most striking actions performed by Anatoly Osmolovsky and the Radek group: they ran up to the Mausoleum of Lenin and stretched out a poster that read "Against all." At this moment, Osmolovsky announced the opening of a party called "Against All." But the party in this performance still remained an extremely marginal phenomenon, and due to the inability to go to the media and become a real force, it remained in a marginal position. Moreover, this completely idealistic project was completely unexpectedly corrupted by the activities of the Kremlin political strategists, who, for some tricky reasons, suddenly began to support it somehow from the side. As a result, it turned out that a naive artist can be used in some direction, which cancels all his intentions. As a result, already in the 2000s, Anatoly Osmolovsky categorically refused such open actionism, declaring non-spectacular art that does not fall into this theater of the absurd.</p>
+			<p>Two actions that have acquired an extremely negative public character are the shares of the "School of Avant-Garde", which Avdei Ter-Ohanyan did. He announced that he would cut icons for money. Well, his idea was that the real avant-garde should do this: cut icons. And all this was done in terms of the "School of Contemporary Art", where his students did various offensive actions. <span style="color:#9437FF">And from that moment began the 2000s.</span> Any complacency of the authorities and the public about radical actionism ended there. Some religious groups sued Avdey Ter-Oganyan, and Ter-Oganyan had to emigrate from the country. In 2000, Oleg Mavromatti made a share. She really wore such a religious character: he nailed himself to the cross. And the action was called <a target="_blank" href="http://lj.rossia.org/users/halfaman/346575.html">"I am not the Son of God."</a> This action also provoked an extremely radical response from the religious community. A criminal case was also instituted against him (inciting ethnic and religious hatred), and Mavromatti also had to leave the country, and currently he lives in Bulgaria. By the beginning of the 2000s, such forms of actionism had almost ceased and revived only in the second half of the 2010s.</p>
+			<p class="without_indent">“Russian rulers have long sought to smear their critics by calling them crazy. In the 1820s, the philosopher Pytor Chaadaev, who penned a series of unflattering “Philosophical Letters” about Russian identity, was declared insane by Tsar Nicholas I. During the later Soviet era, the state developed a practice of punitive psychiatry. A series of writers and dissidents who dared challenge the official line, including Joseph Brodsky and Vladimir Bukovsky, passed through dubious psych wards. “There are people who are fighting with communism…but those people are clearly not in a normal psychological state,” declared Nikita Khrushchev in 1959. Similar proclamations have been voiced by Putin’s backers too, including the nationalist ideologue Alexander Dugin, who once said, “There are no more opponents of Putin’s course, and if there are, then they are mentally ill and must be sent for examinations.”<sup id="tooltip17">17</sup></p>
+			
+			<h2 id="part4">Part 4: Petr Pavlensky</h2>
+			<p class="without_indent">“PAVLENSKY: Malevich said, “In art, truth is important, not sincerity.”<br>
+			YASMAN: Petr Andreevich, my dear, I quite enjoy talking with you. But will we be long today? It’s just, I come here every day at seven in the morning...<br>
+			PAVLENSKY: I want us to find some points of contact, I want to understand how both sides think. To recontextualise something from the symbolic field into the legal-procedural codex is a difficult task.;<br>
+			YASMAN: What did you say? I didn’t understand a damn thing – just like when I studied your statement.<br>
+			PAVLENSKY: I spent a long time writing it.<br>
+			YASMAN: Let’s speak in Russian.<br>
+			PAVLENSKY: In Russian: there is a symbolic field. Symbols, signs. Signifier and signified. Art works in this field. But at the same time, of course, in reality too. For us, just as for Malevich, truth should come before sincerity. That is, we should begin to look at the action, at the act of art from different sides, and then we can arrive at some kind of truth. What was the action aimed at: defiling social mores, or, instead, strengthening social ties?<br>
+			YASMAN: No one is investigating anyone for any kind of action. The investigation is being carried out in relation to an undetermined group of people for the burning of tyres.<br>
+			PAVLENSKY:  For fire?<br>
+			YASMAN: For the burning of tyres!”<sup id="tooltip18">18</sup></p>
+			<p>Pavel Yasman, a young investigator, was assigned to assemble the criminal case against Petr Pavlensky’s action “Freedom”, during which on February 23, 2014 he and other participants set fire to a barricade of tires on the Malo-Konyushenny bridge in St. Petersburg in support of the Maidan in Kiev.</p>
+			<p>By infiltrating the legal system, Pavlensky finds ever richer material for his art. Unbeknown to Yasman, their conversations were being recorded. Pavlensky later published them online as a three-act play, a set of dialogues about the nature of the legal system, the role of the state in Russian life, and the meaning of art. On August 8, 2015 Yasman resigned from the Investigative Committee. On December 10, 2015 he received the status of a lawyer, and on July 15, 2015 he came to the first meeting in the case of Pavlensky in full readiness to provide him with protection. The metamorphosis of the prosecutor impressed the public.</p>
+			<p class="without_indent">Pavlensky has a lot of artistic events: in 2012, he stood with his mouth sewn (“Stitch”) in front of the Kazan Cathedral in support of the Pussy Riot, who was then tried, in 2013 he was lying wrapped in barbed wire <a target="_blank" href="https://www.youtube.com/watch?v=SbCUcLpCyFQ">(“Carcass”)</a> in front of the Legislative Assembly of St. Petersburg, in the same 2013, he nailed his scrotum <a target="_blank" href="https://www.youtube.com/watch?v=oHVdz3S4wJM">(“Fixation”)</a> to the paving stones of Red Square (the most famous action to date), in an artist’s statement, Pavlensky makes clear the intent to shock, declaring that this action is “a metaphor for the apathy, political indifference, and fatalism of Russian society”. In 2014 he cut off his earlobe <a target="_blank" href="https://www.youtube.com/watch?v=YwoMPyxi8PU">(“Separation”)</a> sitting on the fence of the Institute named after Serbian.</p>
+			<p>All these actions were widely discussed - especially, of course, about nailed testicles. However, it seems that genuine glory came to him only now - against the background of the burning massive door of the FSB (“Threat”). A month of art criticism literally began on social networks: everyone enthusiastically discusses whether this is art or not, what a real artist should and should not do. Most believe that the real art is to paint canvases, like Aivazovsky, and the real artist should be exhibited in galleries these are the remnants of ideas about high art that were once learned at the Art History lessons. Pavlensky argued:</p>
+			<img src="./img/image1_1.jpg"/>
+			<span class="img_title">Petr Pavlensky, “Threat”, Moscow 2015</span>
+			<p class="without_indent">“The authorities strive to objectify a person, to turn him into a predictable function. But I am fighting for subjectivation through the objectification of power, trying to get these tools to work for art. I build the actions on this, and it is important that during the implementation of the action I have to do the very minimum, and then the authorities make the maximum, all these police, doctors, firefighters, psychiatrists - they are drawn into the situation and form a statement. And in the general process of political art, administrative and criminal matters are of great importance. After all, art is a direct work with an area of understanding. Fear that you will be prosecuted, by the way, is also an instrument of power with which I work. But this is not a problem, but the beginning of the process of establishing the boundaries of the form of political art. The instrument of power is naming, labeling: for example, in Nazi Germany, the government stuck the label “degenerative” on a whole layer of art. What I am doing, the authorities are trying to call crime or madness. My task is to prevent it from imposing naming.”</p>
+			<p>Pavlensky’s works are an illustration of a new trend in Russian art, and Activism is a political performance art that has a clearly bodily character. These works represent a significant deviation from the literary milieu, which historically functioned as the main site for official and opposition discourse.</p>
+			
+			<h2 id="part5">Part 5: body is a text, sexuality, sociality</h2>
+			<p class="without_indent">The times when an artist needs certain tools are long gone. In the middle of the last century, the old methods in art were replaced by new forms, the object of art was modified along with the environment in which the artist lived.</p>
+			<p>The most popular form of visual art became actionism, which consists of the desire to erase the line between art and reality and the search for new ways of artistic expression. In actionism, an artist is usually the subject or object of a work of art.</p>
+			<p>Nowadays to create works of art, the only tool that does not need to be obtained, bought or created is your own body. The body is a text, sexuality, sociality, something that goes beyond the limits and in particular an instrument of power. Actionists often emphasize the latter, using their main instrument of creation. Pavlensky also draws attention to the same.</p>
+			<p>His spectacular actions related to self-mutilation, as well as vandalism, blurred the boundaries between art, protest and crime. A sewn mouth, a cut off earlobe, barbed wire around the torso and a nailed scrotum are the brightest illustrations of the lack of freedom of the body social, political and personal.</p>
+			<p>The concept of “corporeality” is impossible without the mention of Michel Foucault. All of Pavlensky’s works are riddled with thoughts on the interaction of power and a man. Disciplinary mechanisms, according to Foucault, directly influenced the formation of a number of concepts, as well as the mind, sexuality and bodily practices of a person. Pavlensky’s art is filled with references to many books and concepts of Foucault. The most interesting in the context of Peter's actions are the two epistemological works of the philosopher: “Madness and Civilization” and “Discipline and Punish”. </p>
+			<p>The last book is especially important, since it imbues every absolute share of Pavlensky. Through seemingly simple actions, Pavlensky unfolds the internal of Foucault from "Discipline and Punish." The philosopher describes how and due to which the attitude of the individual and power changed through the transformation of the penitentiary system. The art of Pavlensky contains the whole process. Self-torture on the street, of course, dates back to the spectacle of medieval executions, the starting point of Foucault's narrative. The consequences of the actions cleverly dissects the features of modern repressive mechanisms and prisons.</p>
+			<p>Among the actions of Pavlensky there is one that refers directly to Foucault, his speech about the “Segregation”. In 2014, after the ongoing “psychiatric persecution”, Peter prepared an answer specifically to this instrument of power. The artist, naked, climbed onto the roof of the Serbian Institute, where he cut off his earlobe in front of the crowd.</p>
+			<p>“Segregation” is one of Pavlensky’s most striking and deepest action, working on several semantic levels at once. The easy-to-read reference to Van Gogh illustrates the long history of the artist’s relationship with repressive psychiatry. The epistemology of this kind of relationship was precisely analysed by Foucault in the book “Madness and Civilization”. Psychiatry has always built a concrete wall between the healthy and the sick, serving the authorities.</p>
+			<p>So we got to the central concept in the art of Pyotr Pavlensky, in which the legacy of both Foucault and the predecessor actionists is noticeable. The secret for understanding Pavlensky’s actions lies in his favourite phrase: “The history of art is the history of a clash of man and power.” There are a lot of arguments and examples in favor of such an understanding of the history of art, although the interpretation, of course, is controversial and subjective. But here we are interested in precisely the point of view of the artist. Pavlensky basically puts himself in the position of "one against the system." As we see from the same rallies, the government knows very well what to do with community. But Peter's example illustrates a funny paradox - power has no idea what to do with a loner. By getting up in the position of "one against power", Peter does not try to claims the mantle of the hero, he is still an artist. It is this act that puts the repressive apparatus at a loss, because it also turns into a direct participant of the action.</p>
+			<p>The specificity of actionism is that the art works much longer than the creative act itself. In the case of Pavlensky actions work as long as they talk about them. The artist very well understands what strings to pull, in order to force the authorities to interact with him in the exactly way he intended to. His most sensational action “Fixation” on Red Square is a great example of this.</p>
+			<p>If artists of the past subtly touched power through images in their works, then the activists create an image that directly touches power itself. The artist’s toolkit and the creative process have changed. Now it speaks not only of the beautiful, the terrible or the momentary, but also the important. Important for the artist himself, and for the socio-political context in which he lives. An action is not that it is done directly on the street, but that which happens afterwards. The “Fixation" performance widely glorified the artist, but it was the famous arson of the door of the FSB that became the pinnacle of his work. A simple act already contains the most important message - a person goes into a direct, contact, clash with the authorities and it can’t even keep track of the door to their “house.” From the very beginning Pavlensky took an attacking position and kept it at all subsequent stages of the action - which also reveals its new meanings. </p>
+			<p>Going to jail is also an important stage of the action. It shows the artist as a prisoner and the artist as a terrorist - both roles that are very close and understandable to Russia. Moreover, in many past actions Pavlensky symbolically connected the country with the zone - to take the same “Fixation” or an equally powerful image from “Carcass”. Five years ago, Peter loudly voiced what Face<sup id="tooltip19">19</sup> had recently sung about. In a country like a zone, policemen are lost at the sight of a man in barbed wire.</p>
+			<p>In any art classic or modern consequences are always important. Reaction is also an act of art and that very fuel, thanks to which it lives forever. Maintaining attention in a manner immortalised in stone or canvas is a great skill.</p>
+			<img src="./img/image1_2.jpg"/>
+			<span class="img_title">A. Monastyrsky, “Slogan 1977”, the forest near Moscow, 1977<br>“I do not complain and I like everything, despite the fact that I have never been here and do not know anything about these places.”</span>
+			
+			<h2 id="conclusion">Conclusion</h2>
+			<p class="without_indent">This thesis examined the relatively recent emergence of bodily protest art in Russia, which replaced the literary text. This shift can be approximately equally attributed to the cultural, socio-political and economic shifts after the collapse of the Soviet Union and is especially indicative of modern conditions that simultaneously contribute to and threaten the development of the Russian public sphere. It seems to me that the main task of activists is to shock the public, and also, if possible, destroy the power systems that make up this public.</p>
+			<p>The starting point of inspiration for writing this thesis was a documentary that I accidentally watched on YouTube, although it was simply impossible to pass by, because it caused a rather great resonance in Russian society. The video <a target="_blank" href="https://www.youtube.com/watch?v=oo1WouI38rQ">“Kolyma - Birthplace of Our Fear”</a> was shot by Jura Dud, a Russian journalist and video blogger. It made a strong impression on me because it was dedicated to the Stalinist repressions. The crew of the Vdud Youtube channel for 9 days drove the entire Kolyma highway (2 thousand km), which connects Yakutia and the Magadan region in severe frost. In the 1930s, prisoners built this road. Most of the 2-hour film is an interview with locals. Also in the documentary, the daughter of space rocket designer Sergei Korolyov, Natalya recalls what her repressed father outlive in Kolyma. According to Dud, the purpose of the film is “to tell and remind you of the horror the country experienced during the period of 1930–40s”.</p>
+			<p>In April 2019, Russian residents rate positively Stalin's role in history. According to a Levada Center survey, more than 70% of respondents said they sympathize him or admire him<sup id="tooltip20">20</sup>, and almost half of those polled are ready to justify Stalin's repressions. According to WCIOM (All-Russian Center for the Study of Public Opinion) almost half of Russians between the ages of 18 and 24 have never heard of Stalin's repressions.</p>
+			<p>While I was writing this thesis, at various stages it was read by and discussed with completely different people. I was genuinely surprised that many of them asked me to explain specific topics in more details. I was sure that people outside of Russia knew almost as much as I knew about it, but later I realised how wrong I was. Media propaganda creates a certain veil, which does not allow properly evaluate the situation in Russia both abroad and in the country. I do not want to say that with this thesis I reinventing the wheel, but I hope that at least I will open the veil a little to show and clarify to foreign people of what is happening in Russia without embellishing anything.</p>
+			<p>In “Why Should We Protest,” Masha Gessen explains that “the choice to protest ... is the choice to take control of your body, your time and your words, and at the same time regain your ability to see the future.”<sup id="tooltip21">21</sup> When democratic freedoms in a country are so limited, the importance of protest grows and of course it is easiest to ignore this fact. But if we learn to listen and try to understand these actions, we can create a space in which the exchange of political discourse is possible, which ultimately will enable us to play an active role in shaping our own future.</p>
+			<p>How is it that so much time has passed, already new generations have grown, but fears and archetypes remain in Russian people? This, of course, is a philosophical problem. This may be due to the climate of Russia, and from the fact that Russia have scarce resources, and from the fact that Russia, on the contrary, are the richest country in the world. The essence, apparently, is that this state, which holds Russia together and allows it to exist all the same immense, it also fetters the country. In order for something to change globally in the country, it is necessary to give free rein to the initiative from below: let people create, try, make mistakes, invent something. But for this it is necessary to loosen the bonds. And in order for the conditions to be real for this, one must not impede the self-organization of people.</p>
+			<p class="grey">After a 40 minute ride in a stuffy paddy wagon, we finally stopped. The hissing sound of the door opening made it clear that they would now lead us to the police station. A policeman got into the bus, opened the cage and told everyone to go out. When we got off the bus we were met by a large number of policemen forming a tunnel for us. We were taken to the station, the policeman on duty asked: “How many? Are they all from the protest on Tverskaya Street?” Another man replied to him: “Yes. Sixteen of them!” We were taken to some classroom, there were desks, but a lattice iron door make it different from the typical school class. The windows were walled up and it was very hot due to the terrible ventilation. We talked with each other, initially there was a thought that we were not kept for a long time and we would leave this place before midnight, but only after two hours they began to call us to give testimony. We went up to the third floor to give testimony, they also took a picture of us and sent back to the classroom. Time passed, but no one gave out an arrest report and did not let us go. Many people were sleeping at these school desks. Around three o'clock in the morning a policeman came in and called my last name. I was handed a report on an administrative offense. I signed it and asked the policeman: “What’s next?”. He replied: “Only a fine of 500 rubles (7,10 euros). You didn’t do anything, you just have been not in right place and time.” He wrote out a summons for July 29 and released me. I went out from the police station building, breathed in the fresh morning air and thought: “Maybe my parents were right?”</p>
+			
+			<h2 id="reference-list">Reference list (Not complete yet)</h2>
+			<p>Critchley, S. (2014).&nbsp;<span><em>Conference </em></span><span><em>&ldquo;</em></span><span><em>Performance Art: Ethics in Action.&rdquo;</em></span>&nbsp;<span><em>YouTube</em></span>. Available at: <span><a href="https://www.youtube.com/watch?v=QoD8Jvufcoc">https://www.youtube.com/watch?v=QoD8Jvufcoc</a></span>.</p>
+			<p>Dr Volk, C. (2009). Stalinism, Memory and Commemoration: Russia&rsquo;s dealing with the past. Vol. 6(№ 2).</p>
+			<p>Anti-Corruption Foundation (FBK), (2017).&nbsp;<span><em>Don</em></span><span><em>&rsquo;</em></span><span><em>t call him </em></span><span><em>&laquo;Dimon</em></span><span><em>&raquo;</em></span>. [online] сайт ФБК. Available at: <span><a href="https://fbk.info/english/english/post/304/">https://fbk.info/english/english/post/304/</a></span>.</p>
+			<p>Galperina, M. (2013).&nbsp;<span><em>An Interview With Petr Pavlensky: Anarchist Artist Nails His Balls to the Red Square, So You Don</em></span><span><em>&rsquo;</em></span><span><em>t Have To - ANIMAL</em></span>. [online] ANIMAL. Available at: <span><a href="http://animalnewyork.com/2013/interview-petr-pavlensky-anarchist-artist-nailed-balls-red-square-dont/">http://animalnewyork.com/2013/interview-petr-pavlensky-anarchist-artist-nailed-balls-red-square-dont/</a></span>.</p>
+			<p>Gessen, M. (2017).&nbsp;<span><em>The Protest Artist Who Stumps Putin</em></span>. [online] The New Yorker. Available at: <span><a href="https://www.newyorker.com/news/news-desk/the-protest-artist-who-stumps-putin">https://www.newyorker.com/news/news-desk/the-protest-artist-who-stumps-putin</a></span>.</p>
+			<p><span>Goldberg, R. and Kroemer, H. (1979).&nbsp;</span><em>Performance</em><em> </em><em>: live art 1909 to the present</em><span>. London: Thames And Hudson.</span></p>
+			<p>Guelman, M. (2017).&nbsp;<span><em>Why Russia produces (and quashes) so much radical art</em></span>. [online] CNN Style. Available at: <span><a href="https://edition.cnn.com/style/article/russia-protest-art-saatchi-gallery/index.html">https://edition.cnn.com/style/article/russia-protest-art-saatchi-gallery/index.html</a></span>.</p>
+			<p>Heinrich, F. (2012). &ldquo;Flesh as Communication &mdash; Body Art and Body Theory. [online] Available at: <span><a href="https://contempaesthetics.org/newvolume/pages/article.php?articleID=633">https://contempaesthetics.org/newvolume/pages/article.php?articleID=633</a></span>.</p>
+			<p><span>Laird, S. (2008).</span><em>Voices of Russian literature</em><em> </em><em>: interviews with ten contemporary writers / monograph.</em><span>&nbsp;Oxford: Oxford University Press.</span></p>
+			<p>Levada.ru. (2016).&nbsp;<span><em>Ко Всемирному дню писателя</em></span>. [online] Available at: <span><a href="http://www.levada.ru/2016/03/02/ko-vsemirnomu-dnyu-pisatelya/">http://www.levada.ru/2016/03/02/ko-vsemirnomu-dnyu-pisatelya/</a></span>.</p>
+			<p>Makarychev, A. (2012). Political Issues in Russian Literary Discourse.&nbsp;<span><em>Demokratizatsiya</em></span>, Vol. 20(№ 3), pp.242&ndash;247.</p>
+			<p>Masterkova, M. (1982). Performances in Moscow.&nbsp;<span><em>A-YA: Contemporary Russian Art</em></span>, (№ 4), pp.6&ndash;11.</p>
+			<p>Navalny, A. (2012).&nbsp;<span><em>про пусси райотс</em></span>. [online] @livejournal. Available at: <span><a href="https://navalny.livejournal.com/690551.html">https://navalny.livejournal.com/690551.html</a></span>.</p>
+			<p>Nikolaev, A. (2012). International Festival of Activist Art. 24 September -10 October 2011.&nbsp;<span><em>MediaImpact</em></span>, pp.28&ndash;33.</p>
+			<p>NME (2018).&nbsp;<span><em>Who are Pussy Riot? A guide to the Russian activist group who crashed the World Cup Final</em></span>. [online] NME. Available at: <span><a href="https://www.nme.com/blogs/nme-blogs/who-are-pussy-riot-russia-activist-group-world-cup-final-pitch-invasion-2354987">https://www.nme.com/blogs/nme-blogs/who-are-pussy-riot-russia-activist-group-world-cup-final-pitch-invasion-2354987</a></span>.</p>
+			<p>Pagnes, A. (2014). Notes on Performance art, the body and the political.&nbsp;<span><em>Venice International Performance Art Week: Ritual Body-Political Body</em></span>. [online] Available at: <span><a href="https://media.researchcatalogue.net/rc/master/17/0a/30/aa/170a30aa5d59ca223090eef886c07029.pdf?t=0c6e64313bb0988b3ecace67ef407150&amp;e=1576089900">https://media.researchcatalogue.net/rc/master/17/0a/30/aa/170a30aa5d59ca223090eef886c07029.pdf?t=0c6e64313bb0988b3ecace67ef407150&amp;e=1576089900</a></span>.</p>
+			<p>Platt, J.B. (2014).&nbsp;<span><em>The body politic: how Pyotr Pavlensky</em></span><span><em>&rsquo;</em></span><span><em>s performance art is breaking the mould</em></span>. [online] The Calvert Journal. Available at: <span><a href="https://www.calvertjournal.com/articles/show/3365/pyotr-pavlensky-protest-art-living-pain-sculpture">https://www.calvertjournal.com/articles/show/3365/pyotr-pavlensky-protest-art-living-pain-sculpture</a></span>.</p>
+			<p>Raspopina, S. (2017).&nbsp;<span><em>Pyotr Pavlensky: does a leading Russian art activist deserve unconditional support?</em></span>&nbsp;[online] The Calvert Journal. Available at: <span><a href="https://www.calvertjournal.com/articles/show/7602/pyotr-pavlensky-case-investigation-liberal-reaction">https://www.calvertjournal.com/articles/show/7602/pyotr-pavlensky-case-investigation-liberal-reaction</a></span>.</p>
+			<p>Shields, P. (2019).&nbsp;<span><em>Back to the Future: Remembering the 90</em></span><span><em>&rsquo;</em></span><span><em>s in Putin</em></span><span><em>&rsquo;</em></span><span><em>s Russia </em></span><span><em>&ndash; </em></span><span><em>St Edmund Hall MCR</em></span>. [online] Ox.ac.uk. Available at: <span><a href="http://mcr.seh.ox.ac.uk/back-to-the-future-remembering-the-90s-in-putins-russia/">http://mcr.seh.ox.ac.uk/back-to-the-future-remembering-the-90s-in-putins-russia/</a></span>.</p>
+			<p>Shklovsky, V. (1917). Art as Technique. [online] Available at: <span><a href="https://warwick.ac.uk/fac/arts/english/currentstudents/undergraduate/modules/fulllist/first/en122/lecturelist-2015-16-2/shklovsky.pdf">https://warwick.ac.uk/fac/arts/english/currentstudents/undergraduate/modules/fulllist/first/en122/lecturelist-2015-16-2/shklovsky.pdf</a></span>.</p>
+			<p>Sneider, N. (2016).&nbsp;<span><em>Body Politics</em></span>. [online] 1843. Available at: <span><a href="https://www.1843magazine.com/features/body-politics">https://www.1843magazine.com/features/body-politics</a></span>.</p>
+			<p>snob.ru. (2014).&nbsp;<span><em>Допрос Петра Павленского. Пьеса</em></span><span><em>в</em></span><span><em>трех</em></span><span><em>действиях</em></span>. [online] Available at: <span><a href="https://snob.ru/selected/entry/77648/">https://snob.ru/selected/entry/77648/</a></span>.</p>
+			<p><span>Sperling, V. (2015).&nbsp;</span><em>Sex, politics, and Putin</em><em> </em><em>: political legitimacy in Russia</em><span>. Oxford: Oxford University Press.</span></p>
+			<p>Taplin, P. (2016).&nbsp;<span><em>The writers Russians don</em></span><span><em>&rsquo;</em></span><span><em>t read &ndash; and you should</em></span>. [online] the Guardian. Available at: <span><a href="https://www.theguardian.com/books/booksblog/2016/apr/07/the-writers-russians-dont-read-and-you-should">https://www.theguardian.com/books/booksblog/2016/apr/07/the-writers-russians-dont-read-and-you-should</a></span>.</p>
+			<p><span>Wachtel, A. (2006).</span><em>Remaining Relevant after Communism: The Role of the Writer in Eastern Europe</em><span>. Chicago: The University of Chicago Press.</span></p>
+			<p>YouTube Movies (2014).&nbsp;<span><em>Pussy Riot: A Punk Prayer</em></span>.&nbsp;<span><em>YouTube</em></span>. Available at: <span><a href="https://www.youtube.com/watch?v=EmrrxtceeJs">https://www.youtube.com/watch?v=EmrrxtceeJs</a></span>.</p>
+			<p>Габович, М. and Чирки, Л. (2012).&nbsp;<span><em>&laquo;Люди протестуют не только ради достижения стратегических целей&raquo;: Интервью с Михаилом Габовичем</em></span>. [online] Dekoder.org. Available at: <span><a href="https://protest.dekoder.org/protesty-misha-gabovich-interview">https://protest.dekoder.org/protesty-misha-gabovich-interview</a></span>.</p>
+			<p>Кашеварова, А. (2012).&nbsp;<span><em>За перформансы, подобные акциям </em></span><span><em>Pussy Riot, </em></span><span><em>будут сажать</em></span>. [online] Известия. Available at: <span><a href="https://iz.ru/news/530863">https://iz.ru/news/530863</a></span></p>
+			<p>Лублина, Я. (2013).&nbsp;<span><em>&ldquo;Слово года&rdquo; осталось за оппозицией</em></span>. [online] Kommersant.ru. Available at: <span><a href="https://www.kommersant.ru/doc/2101161">https://www.kommersant.ru/doc/2101161</a></span>.</p>
+			<p>Осмоловский, А. (2000). Без искусства и без политики &mdash; в XXI век.&nbsp;<span><em>Moscow Art Magazine</em></span>, [online] (№30-31). Available at: <span><a href="http://moscowartmagazine.com/issue/80/article/1738">http://moscowartmagazine.com/issue/80/article/1738</a></span>.</p>
+			<p><em>Островский, </em><em>A</em><span>. (2019).</span><em>Говорит и показывает Россия : путешествие из будущего в прошлое средствами массовой информации</em><span>. Аст</span><span>: Corpus, Moskva.</span></p>
+		</div>
+	</div>
+	
+	<div class="scrollUp">
+		<div class="scrollUp_inner">
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 476.213 476.213" xml:space="preserve">
+				<polygon points="368.713,130.606 238.107,0 107.5,130.607 128.713,151.82 223.353,57.18 223.353,476.213 253.353,476.213 
+					253.353,57.672 347.5,151.82 "/>
+			</svg>
+		</div>
+	</div>
+	
+	<div class="marquee_wrap">
+		<div class="marquee_button_wrap">
+			<div id="marquee_button"></div>
+		</div>
+		<div class="marquee">  
+			<span id="marquee_text"></span>
+		</div>
+	</div>
+	
+	<div class="tooltip-painter" id="tooltip1-content" style="display:none">
+      <div class="content">Sneider, N. (2016). Body Politics. [online] 1843. Available at: <a target="_blank" href="https://www.1843magazine.com/features/body-politics">https://www.1843magazine.com/features/body-politics</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip2-content" style="display:none">
+      <div class="content">OMON is an elite supdivision of the state militia formed in 1987 to deal with organised crime and keep public order at mass meetings, and used (especially in the early 1990s) to counteract anti-government and regional separatist movements in Russia or (formerly) the Soviet Union. ( Lexico vocabulary)</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip3-content" style="display:none">
+      <div class="content">Dostoevsky, F. (1864). Notes from Underground.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip4-content" style="display:none">
+      <div class="content">WCIOM (All-Russian Center for the Study of Public Opinion) (2019). Ratings of trust in politicians, approval of the work of state institutions, party ratings. [online] Wciom.ru. Available at: <a target="_blank" href="https://wciom.ru/index.php?id=236&uid=9707">https://wciom.ru/index.php?id=236&uid=9707</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip5-content" style="display:none">
+      <div class="content">WCIOM (All-Russian Center for the Study of Public Opinion) (2019). Ratings of trust in politicians, approval of the work of state institutions, party ratings. [online] Wciom.ru. Available at: <a target="_blank" href="https://wciom.ru/index.php?id=236&uid=9728">https://wciom.ru/index.php?id=236&uid=9728</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip6-content" style="display:none">
+      <div class="content">WCIOM (All-Russian Center for the Study of Public Opinion) (2019). Ratings of trust in politicians, approval of the work of state institutions, party ratings. [online] Wciom.ru. Available at: <a target="_blank" href="https://wciom.ru/index.php?id=236&uid=9952">https://wciom.ru/index.php?id=236&uid=9952</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip7-content" style="display:none">
+      <div class="content">From the interview with Alexander Rudziansky</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip8-content" style="display:none">
+      <div class="content">Guelman, M. (2017). Why Russia produces (and quashes) so much radical art. [online] CNN Style. Available at: <a target="_blank" href="https://edition.cnn.com/style/article/russia-protest-art-saatchi-gallery/index.html">https://edition.cnn.com/style/article/russia-protest-art-saatchi-gallery/index.html</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip9-content" style="display:none">
+      <div class="content">Evtushenko, E. (2007). A poet in Russia is more than a poet.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip10-content" style="display:none">
+      <div class="content">Translated by Scott Horton. Available at: <a target="_blank" href="https://jacket2.org/commentary/ian-probstein-mandelstam-stalin-epigram">https://jacket2.org/commentary/ian-probstein-mandelstam-stalin-epigram</a></div>
+    </div>
+	<div class="tooltip-painter" id="tooltip11-content" style="display:none">
+      <div class="content">Sneider, N. (2016). Body Politics. [online] 1843. Available at: <a target="_blank" href="https://www.1843magazine.com/features/body-politics">https://www.1843magazine.com/features/body-politics</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip12-content" style="display:none">
+      <div class="content">Guelman, M. (2017). Why Russia produces (and quashes) so much radical art. [online] CNN Style. Available at: <a target="_blank" href="https://edition.cnn.com/style/article/russia-protest-art-saatchi-gallery/index.html">https://edition.cnn.com/style/article/russia-protest-art-saatchi-gallery/index.html</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip13-content" style="display:none">
+      <div class="content">Levada.ru. (2016). To the World Writer's Day. [online] Available at: <a target="_blank" href="http://www.levada.ru/2016/03/02/ko-vsemirnomu-dnyu-pisatelya/">http://www.levada.ru/2016/03/02/ko-vsemirnomu-dnyu-pisatelya/</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip14-content" style="display:none">
+      <div class="content">Sneider, N. (2016). Body Politics. [online] 1843. Available at: <a target="_blank" href="https://www.1843magazine.com/features/body-politics">https://www.1843magazine.com/features/body-politics</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip15-content" style="display:none">
+      <div class="content">Yury Luzhkov, (born Sept. 21, 1936, Moscow, Russia, U.S.S.R.), Russian politician who served as mayor of Moscow (1992–2010). As mayor, he transformed Moscow into the engine of post-Soviet state capitalism. (Encyclopaedia Britannica)</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip16-content" style="display:none">
+      <div class="content">Boris Yeltsin, (born February 1, 1931, Sverdlovsk [now Yekaterinburg], Russia, U.S.S.R.—died April 23, 2007, Moscow, Russia), Russian politician who became president of Russia in 1990. In 1991 he became the first popularly elected leader in the country’s history, guiding Russia through a stormy decade of political and economic retrenching until his resignation on the eve of 2000. (Encyclopaedia Britannica)</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip17-content" style="display:none">
+      <div class="content">Sneider, N. (2016). Body Politics. [online] 1843. Available at: <a target="_blank" href="https://www.1843magazine.com/features/body-politics">https://www.1843magazine.com/features/body-politics</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip18-content" style="display:none">
+      <div class="content">snob.ru. (2014). The interrogation of Peter Pavlensky. The play in three acts. [online] Available at: <a target="_blank" href="https://snob.ru/selected/entry/77648/">https://snob.ru/selected/entry/77648/</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip19-content" style="display:none">
+      <div class="content">The Moscow Times (2018). ‘I Am the Enemy of the State’: Russian Rapper Compares Russia to Prison Camp. [online] The Moscow Times. Available at: <a target="_blank" href="https://www.themoscowtimes.com/2018/09/04/enemy-of-the-state-russian-rapper-compares-russia-to-prison-camp-a62775">https://www.themoscowtimes.com/2018/09/04/enemy-of-the-state-russian-rapper-compares-russia-to-prison-camp-a62775</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip20-content" style="display:none">
+      <div class="content">TBK (2015). Levada Center: 70% of Russian residents have a positive attitude towards Stalin. [online] Tvk6.ru. Available at: <a target="_blank" href="https://tvk6.ru/publications/news/42083/">https://tvk6.ru/publications/news/42083/</a>.</div>
+    </div>
+	<div class="tooltip-painter" id="tooltip21-content" style="display:none">
+      <div class="content">Gessen, M. (2016). Masha Gessen: Why We Must Protest. [online] Literary  Hub. Available at: <a target="_blank" href="https://lithub.com/masha-gessen-why-we-must-protest/">https://lithub.com/masha-gessen-why-we-must-protest/</a>.</div>
+    </div>
+	
+	<script>
+		$(document).ready(function(){
+		
+			// Merquee
+			document.onselectionchange = function() {
+				let selection = document.getSelection();
+				if (selection != '') {
+					var marqueeId;
+					marqueeId = setTimeout(function() {
+						$('.marquee_wrap').addClass('open');
+						$('#marquee_text').text(selection);
+						$('.marquee').simplemarquee({speed: 70, handleHover: false, space: 150});
+					}, 3000);
+					while (marqueeId--) {
+						clearTimeout(marqueeId);
+					}
+				}
+				$('.marquee_button_wrap').on('click', '#marquee_button', function(event) { 
+					$('.marquee_wrap').removeClass('open');
+					$('#marquee_text').text('');
+				});
+			}; 
+			
+			// Header menu
+			$('.menu_button').on('click', function(){
+				$('.menu_wrap').toggleClass('open');
+				$('.menu').slideToggle();
+			})
+			
+			// Header menu scroll
+			$('.menu').on('click', 'a', function(event) {
+				event.preventDefault();
+				var id = $(this).attr('href'),
+					top = $(id).offset().top;
+				$('body,html').animate({scrollTop: top}, 1000);
+				
+			});
+			
+			// Collage scroll
+			$('.collage').on('click', 'a', function(event) {
+				event.preventDefault();
+
+				$(this).parent().addClass('active');
+				
+				var id = $(this).attr('href'),
+					top = $(id).offset().top;
+					
+				var timerId;
+				timerId = setTimeout(function() {
+					$('body,html').animate({scrollTop: top}, 1000)
+				}, 500);
+				while (timerId--) {
+					clearTimeout(timerId);
+				}
+				//alert(timerId)
+			});
+			
+			// Remove collage Active class 
+			$('.content').on('click', 'h2', function() {
+				$('.collage_item').removeClass('active');
+			});
+			
+			// Show/Hide scroll to top button
+			$(window).scroll(function(){
+				if ($(this).scrollTop() > 300) {
+					$('.scrollUp').fadeIn();
+				} else {
+					$('.scrollUp').fadeOut();
+				}
+			});     
+
+			// Scroll to top
+			$('.scrollUp').click(function(){
+				$('.collage_item').removeClass('active');
+				$("html, body").animate({ scrollTop: 0 }, 300);
+				return false;
+			});
+			
+		});
+	</script>
+	<script src="./js/tips.js"></script>
+</body>
+</html>
