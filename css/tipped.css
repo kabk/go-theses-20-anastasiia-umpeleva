@@ -36,7 +36,7 @@
   clear: both;
   position: relative;
   padding: 10px;
-  font-size: 11px;
+  font-size: 11tooltip-painterpx;
   line-height: 16px;
   color: #fff;
   box-sizing: border-box !important;
